@@ -1,0 +1,50 @@
+
+
+  <div class="displayEachResult" *ngFor="let dep of dependencies">
+    {{dep.groupId + " | "}}
+    {{dep.artifactId + " | "}}
+    {{dep.version + " | "}}
+    <button type="submit" (click)="downloadOnButtonClick(dep.search)">{{dep.search}}</button>
+    {{dep.lastModifiedDate}}
+  </div>
+
+  <div class="inputForm">
+    <form #addForm="ngForm" class="dependency-info" (ngSubmit)="addDependency(addForm)">
+      <div class="form-group">
+        <label for="groupId">Group Id</label>
+        <input type="text" ngModel class="form-control" id="groupId"
+               required
+               name="groupId">
+      </div>
+      <div class="form-group">
+        <label for="artifactId">Artifact Id</label>
+        <input type="text" ngModel class="form-control" id="artifactId"
+               required
+               name="artifactId">
+      </div>
+      <div class="form-group">
+        <label for="version">Version</label>
+        <input type="text" ngModel class="form-control" id="version"
+               required
+               name="version">
+      </div>
+
+      <div class="form-group">
+        <input type="file" ngModel class="form-control" id="fileUpload" required name="fileUpload" (change)="selectFile({event : $event})">
+      </div>
+
+      <button type="submit" [disabled]="!addForm.valid">Submit</button> <!--The type submit here calls the ngSubmit on form tag-->
+      <br>
+    </form>
+  </div>
+
+  <input type="text" ngModel #searchKeyword>
+  <button type="button" (click)="search(searchKeyword.value)">Search</button>
+
+    <div class="searchEachResult" *ngFor="let dep of searchedDependencies">
+      {{dep.groupId + " | "}}
+      {{dep.artifactId + " | "}}
+      {{dep.version + " | "}}
+      <button type="submit" (click)="downloadOnButtonClick(dep.search)">{{dep.search}}</button>
+      {{dep.lastModifiedDate}}
+    </div>
